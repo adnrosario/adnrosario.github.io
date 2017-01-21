@@ -1,0 +1,12 @@
+{
+    
+    "dependencies": {
+        "phaser": ""
+    },
+    "typeAcquisition": {
+        "include": [
+            "phaser"
+        ]
+    }
+
+}    

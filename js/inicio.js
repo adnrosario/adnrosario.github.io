@@ -2,6 +2,7 @@ var inicio = {
     preload: function() {
         game.load.image('FndInicio', 'assets/img/inicio/fndInicio.png');
         game.load.image('Clmr', 'assets/img/inicio/clmr.png');
+        game.load.image('Clmr2', 'assets/img/inicio/clmr2.png');
         game.load.image('Vnt', 'assets/img/inicio/vnt.png');
         game.load.image('FndPrtc', 'assets/img/inicio/fndPrtc.png');
         game.load.spritesheet('BtnPlay', 'assets/img/inicio/btnPlay.png', 76, 76);
@@ -18,6 +19,7 @@ var inicio = {
         this.filter.addToWorld(0, 0, 900, 600);
         game.add.image(0, 0, 'FndInicio');
         game.add.image(0, 0, 'Clmr');
+        game.add.image(0, 0, 'Clmr2');
         game.add.image(0, 0, 'Vnt');
         game.add.image(0, 0, 'FndPrtc');
         game.add.image(0, 0, 'Titulo');

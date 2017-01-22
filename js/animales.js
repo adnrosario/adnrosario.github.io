@@ -7,30 +7,35 @@ var animales = {
     },
     preload: function() {
         if(this.exito) {
-            game.load.image('fnd', 'assets/img/animales/fnd.png');
+            if(this.finDeJuego) {
+                game.load.audio('Transicion', 'assets/sounds/exito.mp3'); 
+                game.load.image('fnd', 'assets/img/animales/fndExito.png');
+            }
+            else {
+                game.load.audio('Transicion', 'assets/sounds/transicion_juego.mp3');
+                game.load.image('fnd', 'assets/img/animales/fnd.png');
+            }
             game.load.image('prtc', 'assets/img/animales/prtc.png');
             game.load.image('Animal'+this.numeroAnimal, 'assets/img/animales/anm'+this.numeroAnimal+'.png');
         }
         else {
-            game.load.image('fnd', 'assets/img/animales/fnd.png');
+            game.load.audio('Transicion', 'assets/sounds/derrota.mp3');
+            game.load.image('fnd', 'assets/img/animales/fndPerdio.png');
             game.load.image('Animal'+this.numeroAnimal, 'assets/img/animales/falla'+this.numeroAnimal+'.png');
         }
-        game.load.audio('Transicion', 'assets/sounds/transicion_juego.mp3');
+        
     },
     create: function() {
+        game.add.image(0, 0, 'fnd');
         if(this.exito) {
-            game.add.image(0, 0, 'fnd');
             game.add.image(0, 0, 'prtc');
-        }
-        else {
-            game.add.image(0, 0, 'fnd');
         }
         var animal = game.add.image(0, 0, 'Animal'+this.numeroAnimal);
         animal.alpha = 0;
 
         if(!this.finDeJuego) {
             setTimeout(function() {
-                game.state.start('inicio');
+                game.state.start('play');
             }, this.tiempo*2);
             game.add.tween(animal).to({alpha: 1}, this.tiempo , Phaser.Easing.Linear.None, true, 0, 0, true);
         }

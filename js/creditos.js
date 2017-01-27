@@ -23,7 +23,7 @@ var creditos = {
         var style = {
             align: "center",
         };
-        this.textoCreditos = game.add.text(game.world.centerX, 600, "Arte - Visual\nZelmar Ramirez\nCatalina Daffunchio\n\nGame Design\nAlejandra Malina\n\nMúsica\nFederico Cardinale\nIgnacio Quiroz\nIngrid Verly\nMarcelo Monte\n\nProgramación\nAndrés Ditlevsen\nIgnacio Puccini\nRomario Huebra", style);
+        this.textoCreditos = game.add.text(game.world.centerX, 600, "Arte - Visual\nZelmar Ramirez\nCatalina Daffunchio\n\nGame Design\nAlejandra Molina\n\nMúsica\nFederico Cardinale\nIgnacio Quiroz\nIngrid Verly\nMarcelo Monte\n\nProgramación\nAndrés Ditlevsen\nIgnacio Puccini\nRomario Huebra", style);
         this.textoCreditos.anchor.set(0.5);
         this.textoCreditos.fill = '#ffffff';
         this.ElEquipo = game.add.image(0, this.textoCreditos.y, 'ElEquipo');

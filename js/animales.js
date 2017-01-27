@@ -3,7 +3,7 @@ var animales = {
         this.numeroAnimal = animal;
         this.exito = exito;
         this.finDeJuego = !(this.numeroAnimal != 8 && exito);
-        this.tiempo = 1300;
+        this.tiempo = 1000;
     },
     preload: function() {
         if(this.exito) {
@@ -21,7 +21,7 @@ var animales = {
         else {
             game.load.audio('Transicion', 'assets/sounds/derrota.mp3');
             game.load.image('fnd', 'assets/img/animales/fndPerdio.png');
-            game.load.image('Animal'+this.numeroAnimal, 'assets/img/animales/falla'+this.numeroAnimal+'.png');
+            game.load.image('Animal'+this.numeroAnimal, 'assets/img/animales/anm'+this.numeroAnimal+'.png');
         }
         
     },

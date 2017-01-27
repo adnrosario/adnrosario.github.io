@@ -2,39 +2,34 @@ var play = {
 
     preload: function () {
 
-        game.load.image('fondo', '/assets/img/fondoColor.png');
-        game.load.image('cadenaGlow', '/assets/img/CadenaAdnGlow.png');
-        game.load.image('cadena', '/assets/img/cdnAdn.png');
-        game.load.image('luces', '/assets/img/fndLz.png');
-        game.load.image('particula', '/assets/img/particula.png');
+        game.load.image('fondo', 'assets/img/fondoColor.png');
+        game.load.image('cadenaGlow', 'assets/img/CadenaAdnGlow.png');
+        game.load.image('cadena', 'assets/img/cdnAdn.png');
+        game.load.image('luces', 'assets/img/fndLz.png');
+        game.load.image('particula', 'assets/img/particula.png');
 
         game.load.audio('agarrar', 'assets/sounds/agarrar.mp3');
         game.load.audio('error', 'assets/sounds/error.mp3');
         game.load.audio('pegar', 'assets/sounds/pegar.mp3');
         game.load.audio('level1', 'assets/sounds/nivel1.mp3');
 
-        //game.load.text('nivel1', 'niveles/nivel1.txt');
+        for (i = 0; i < 2; i++) {
 
-       
-        this.nivel=[];
+            for (j = 0; j < 14; j++) {
 
-        for (var i = 0; i < 2; i++) {
-
-            for (var j = 0; j < 14; j++) {
-
-                game.load.image('pSnCl' + i + j, '/assets/img/level1/' + i + j + '.png');
+                game.load.image('pSnCl' + i + j, 'assets/img/level1/' + i + j + '.png');
                 console.log('/assets/img/level1/' + i + j + '.png');
-
-               
-                pos=Math.floor((Math.random() * 2)); // entre 0 y 1
-                num=Math.floor((Math.random() * 14)); // entre 0 y 13
-
-                this.nivel.push(pos);
-                this.nivel.push(num);
 
             }
         }
 
+        //game.load.text('nivel1', 'niveles/nivel1.txt');
+        this.nivel = [];
+        for (i = 0; i < 40; i++) {
+            this.nivel.push(Math.floor((Math.random() * 2)));
+            this.nivel.push(Math.floor((Math.random() * 14)));
+
+        }
 
     },
 
@@ -55,8 +50,9 @@ var play = {
 
         this.error = game.add.audio('error');
         this.pegar = game.add.audio('pegar');
-        this.agarrar = game.add.audio('agarrar');
         this.level1 = game.add.audio('level1');
+        this.agarrar = game.add.audio('agarrar');
+
         this.level1.loopFull();
         this.level1.play();
 
@@ -66,27 +62,26 @@ var play = {
 
 
         //this.nivel = game.cache.getText('nivel1').split(',');
-        console.log("Nivel: " + this.nivel);
-
-
+        //console.log("Nivel: " + this.nivel);
 
         var x = 50;
         var y = 10;
         var foo = 0;
 
-
-        this.sinColocar = [];
-        this.colocadas = [];
-
         this.pz = [];
         this.posX = [];
         this.posY = [];
+        this.aciertos = 0;
+        this.sinColocar = [];
+        this.colocadas = [];
+
 
         for (i = 0; i < 14; i++) {
             for (j = 0; j < 2; j++) {
 
 
                 indice = j * 14 + i;
+
 
                 if (foo == 14) {
                     y += 480;
@@ -109,9 +104,6 @@ var play = {
 
 
                 foo++;
-
-
-
 
             }
 
@@ -204,16 +196,17 @@ var play = {
 
             pCl.encastrada = this.arrayObjectIndexOf(this.sinColocar, pSnCl);
 
+
+            this.aciertos++;
+            this.pegar.play();
             this.agregarPieza(pSnCl);
-
             pSnCl.inputEnabled = false;
-
             game.camera.flash(0xffffff, 400);
 
-            this.pegar.play();
-
             console.log("MATCH!!!  index: " + pCl.encastrada);
+
         } else {
+
             game.camera.flash(0xff0000, 400);
             game.camera.shake(0.02, 200);
 
@@ -225,8 +218,12 @@ var play = {
             this.error.play();
 
             console.log("NO MATCH  life: " + this.life);
-            if (this.life <= 0)
+            if (this.life <= 0){
+                this.final(false);
                 console.log("LOOOOSER");
+
+            }
+
         }
 
     },
@@ -282,16 +279,23 @@ var play = {
                     }
                     this.colocadas[i].enable = false;
                     console.log("Life: " + this.life);
-                    if (this.life <= 0)
+                    if (this.life <= 0){
+                        
+                        this.final(false);
                         console.log("LOOOOSER");
 
+                    }
 
                 }
             }
         }
         if (!this.colocadas[this.colocadas.length - 1].enable) {
-            if (this.life > 0)
+            if (this.life > 0){
+                
+                this.final(true);
                 console.log("GANASTE!!!");
+
+            }
         }
 
     },
@@ -301,6 +305,17 @@ var play = {
             if (myArray[i] === object) return i;
         }
         return -1;
+    },
+
+     final: function(gano) {
+        this.level1.stop();
+        
+        if(gano) {
+            game.state.start('animales', true, false, 8, true);
+        }
+        else {
+            game.state.start('animales', true, false, Math.floor(this.aciertos/4), false);
+        }
     }
 
 
